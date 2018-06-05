@@ -20,12 +20,13 @@ $(document).ready(function () {
 
   //  container for words that will be played 
   const wordStore = ['snoopie', 'lassie', 'pluto', 'toto', 'benji'];
-  
+
   // global Variables ok?
   let wordSpaces = [];
   let currentWord = 0;
   let remainingGueses = 8;
   let wins = 0;
+  let usedLetters = [];
 
 
 
@@ -34,7 +35,6 @@ $(document).ready(function () {
   //  start button // run generate word
   $("#start-button").click(function () {
     let currentWord = wordStore[Math.floor(Math.random() * wordStore.length)];
-
     //  display blank word
     for (let i = 0; i < currentWord.length; i++) {
       wordSpaces.push('-');
@@ -43,45 +43,103 @@ $(document).ready(function () {
   });
 
 
-
-
-
-
+  function runScoreboard() {
     // display guesses left   
     $("#guessesLeft").append(remainingGueses);
-
-  // //  score board # wins each word guessed correctly
-
-
-  $("#totalWins").append(wins);
-
-
-  //  read the button user presses read only letters and no repeat letters can be chosen
-
-  // reads users key
-  document.onkeyup = function (event) {
-    var currentGuess = event.key;
-
-    wordSpaces.push(currentGuess);
-    //  populate blank word with guessed letters
-    $("#blankLetters").html(wordSpaces.join(""));
-
-    for (var j = 0; j < currentWord.length; j++) {
-      if (word[j] === currentGuess) {
-        wordSpaces[j] = currentGuess;
-        remainingGuesses--;
-      };
-    };
+    // //  display # wins each word guessed correctly
+    $("#totalWins").append(wins);
+    //  letters guessed tracker
+    $("#usedLetters").append(usedLetters);
   };
 
+  runScoreboard();
 
 
-  //  letters guessed tracker
-  let usedLetters = [];
 
-  $("#usedLetters").append(usedLetters);
 
+
+
+  // ##########1
+  //   // reads users key
+  //   document.onkeyup = function (event) {
+  // //     var currentGuess = event.key;
+  // console.log(currentGuess);
+  //     // loop through current word to determine if key is correct
+  //     for (var j = 0; j < currentWord.length; j++) {
+  //       if (currentWord.charAt(j)) === currentGuess) {
+  //   wordSpaces[j] = currentGuess;
+  //   remainingGuesses--;
+  // };
+  // // push current guess to array
+  // wordSpaces.push(currentGuess);
+  // //  populate blank word with guessed letters
+  // $("#blankLetters").html(wordSpaces.join(""));
+
+  //     };
+  //   };
+
+
+
+
+  // ######################2
+  //   document.onkeyup = function (event) {
+  //     var currentGuess = event.key;
+  //     console.log(currentGuess);
+
+
+
+
+
+  //     let currentWordLetters = [];
+
+  //     for (var j = 0; j < currentWord.length; j++) {
+  //       currentWordLetters.push(currentWord.charAt(j));
+  //     }
+  //     for (var k = 0; k < currentWordLetters.length; k++) {
+  //       if (k == currentGuess) {
+  //         wordSpaces.push(k);
+  //       }
+  //       else {
+  //         usedLetters.push(k);
+  //       }
+  //       remainingGuesses--;
+
+  //     };
+  //   };
+
+  // #################3
+  //   for (var i = 0; i < word.length; i++) {
+  //     if (word[i] === geuss) {
+  //       geusses[i].innerHTML = geuss;
+  //       counter += 1;
+
+
+  // ####################4
+
+
+
+
+
+
+  //checks if letter is in the word or not
+     // reads users key
+    document.onkeyup = function (event) {
+      var currentGuess = event.key;
+      for (i = 0; i < currentWord.length; i++) {
+        if (currentGuess === currentWord[i]) {
+          wordSpaces[i] = guess;
+          $("#blankLetters").innerHTML = wordSpaces.join(" ");
+        }
+      }
+    }
   
+
+
+
+
+
+
+
 
 
 
@@ -92,7 +150,7 @@ $(document).ready(function () {
   //   $('#blankLetters').empty();
   //   $('#usedLetters').empty();
   //   $('#guessesLeft').empty();
-        // remainingGuesses
+  // remainingGuesses
 
 
   //     // Clear out arrays
