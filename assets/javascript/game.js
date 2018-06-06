@@ -36,7 +36,8 @@ $(document).ready(function () {
 
   //  start button // run generate word
   $("#start-button").click(function () {
-    currentWord = wordStore[Math.floor(Math.random() * wordStore.length)];
+    // currentWord = wordStore[Math.floor(Math.random() * wordStore.length)];
+    currentWord = wordStore[0];
     //  display blank word
     for (let i = 0; i < currentWord.length; i++) {
       wordSpaces.push('-');
@@ -61,108 +62,32 @@ $(document).ready(function () {
 
   runScoreboard();
 
-
-
-
-
-
-  // ##########1
-  //   // reads users key
-  //   document.onkeyup = function (event) {
-  // //     var currentGuess = event.key;
-  // console.log(currentGuess);
-  //     // loop through current word to determine if key is correct
-  //     for (var j = 0; j < currentWord.length; j++) {
-  //       if (currentWord.charAt(j)) === currentGuess) {
-  //   wordSpaces[j] = currentGuess;
-  //   remainingGuesses--;
-  // };
-  // // push current guess to array
-  // wordSpaces.push(currentGuess);
-  // //  populate blank word with guessed letters
-  // $("#blankLetters").html(wordSpaces.join(""));
-
-  //     };
-  //   };
-
-
-
-
-  // ######################2
-  //   document.onkeyup = function (event) {
-  //     var currentGuess = event.key;
-  //     console.log(currentGuess);
-
-
-
-
-
-  //     let currentWordLetters = [];
-
-  //     for (var j = 0; j < currentWord.length; j++) {
-  //       currentWordLetters.push(currentWord.charAt(j));
-  //     }
-  //     for (var k = 0; k < currentWordLetters.length; k++) {
-  //       if (k == currentGuess) {
-  //         wordSpaces.push(k);
-  //       }
-  //       else {
-  //         usedLetters.push(k);
-  //       }
-  //       remainingGuesses--;
-
-  //     };
-  //   };
-
-  // #################3
-  //   for (var i = 0; i < word.length; i++) {
-  //     if (word[i] === geuss) {
-  //       geusses[i].innerHTML = geuss;
-  //       counter += 1;
-
-
-  // ####################4
-
-
-
-
-
-
-  //checks if letter is in the word or not
-  // reads users key
-  //     document.onkeyup = function (event) {
-  //       var currentGuess = event.key;
-  //       for (i = 0; i < currentWord.length; i++) {
-  //         if (currentGuess === currentWord[i]) {
-  //           wordSpaces[i] = guess;
-  //           $("#blankLetters").innerHTML = wordSpaces.join(" ");
-  //         }
-  //       }
-  //     }
-
-
-
-
-  // ###################5
   document.addEventListener('keypress', (event) => {
-    let currentGuess = String.fromCharCode(event.keyCode);
-    console.log(currentGuess);
-    console.log(currentWord)
+    let currentGuess = event.key;
 
-    if(currentWord.indexOf(currentGuess) > -1) {
-      // add to rightWords
-      wordSpaces[currentWord.indexOf(currentGuess)] = currentGuess;
+    if (usedLetters.includes(currentGuess)) {
+      return;
+    };
+
+    if (currentWord.includes(currentGuess)) {
+      //    /* check to see if letter appears multiple times */
+      for (var j = 0; j < currentWord.length; j++) {
+        if (currentWord.charAt(j) === currentGuess) {
+          wordSpaces[j] = currentGuess;
+        }
+      }
       renderWordSpaces();
     } else {
       usedLetters.push(currentGuess);
     }
+
     if (wordSpaces.join('') === currentWord) {
-      alert("you win")
+      $("#win-lose").text("You Win")
 
     }
-      
-      runScoreboard();
-      console.log(wordSpaces);
+
+    runScoreboard();
+    console.log(wordSpaces);
   });
 
 
