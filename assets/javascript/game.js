@@ -23,10 +23,12 @@ $(document).ready(function () {
 
   // global Variables ok?
   let wordSpaces = [];
-  let currentWord = 0;
+  let currentWord = [];
   let remainingGueses = 8;
   let wins = 0;
   let usedLetters = [];
+  let rightWord = [];
+
 
 
 
@@ -34,22 +36,27 @@ $(document).ready(function () {
 
   //  start button // run generate word
   $("#start-button").click(function () {
-    let currentWord = wordStore[Math.floor(Math.random() * wordStore.length)];
+    currentWord = wordStore[Math.floor(Math.random() * wordStore.length)];
     //  display blank word
     for (let i = 0; i < currentWord.length; i++) {
       wordSpaces.push('-');
-      $("#blankLetters").html(wordSpaces);
     }
+    renderWordSpaces();
+    console.log(`currentWord: ${currentWord}`);
   });
+
+  const renderWordSpaces = () => {
+    $("#blankLetters").html(wordSpaces);
+  };
 
 
   function runScoreboard() {
     // display guesses left   
-    $("#guessesLeft").append(remainingGueses);
+    $("#guessesLeft").text(remainingGueses);
     // //  display # wins each word guessed correctly
-    $("#totalWins").append(wins);
+    $("#totalWins").text(wins);
     //  letters guessed tracker
-    $("#usedLetters").append(usedLetters);
+    $("#usedLetters").text(usedLetters);
   };
 
   runScoreboard();
@@ -122,23 +129,41 @@ $(document).ready(function () {
 
 
   //checks if letter is in the word or not
-     // reads users key
-    document.onkeyup = function (event) {
-      var currentGuess = event.key;
-      for (i = 0; i < currentWord.length; i++) {
-        if (currentGuess === currentWord[i]) {
-          wordSpaces[i] = guess;
-          $("#blankLetters").innerHTML = wordSpaces.join(" ");
-        }
-      }
+  // reads users key
+  //     document.onkeyup = function (event) {
+  //       var currentGuess = event.key;
+  //       for (i = 0; i < currentWord.length; i++) {
+  //         if (currentGuess === currentWord[i]) {
+  //           wordSpaces[i] = guess;
+  //           $("#blankLetters").innerHTML = wordSpaces.join(" ");
+  //         }
+  //       }
+  //     }
+
+
+
+
+  // ###################5
+  document.addEventListener('keypress', (event) => {
+    let currentGuess = String.fromCharCode(event.keyCode);
+    console.log(currentGuess);
+    console.log(currentWord)
+
+    if(currentWord.indexOf(currentGuess) > -1) {
+      // add to rightWords
+      wordSpaces[currentWord.indexOf(currentGuess)] = currentGuess;
+      renderWordSpaces();
+    } else {
+      usedLetters.push(currentGuess);
     }
-  
+    if (wordSpaces.join('') === currentWord) {
+      alert("you win")
 
-
-
-
-
-
+    }
+      
+      runScoreboard();
+      console.log(wordSpaces);
+  });
 
 
 
