@@ -5,10 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
     <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-
     <script type="text/javascript" src="assets/javascript/game.js"></script>
     <title>Word Game</title>
 </head>
@@ -16,25 +17,30 @@
 <body>
 
     <main role="main">
-        <button type="button" id="start-button">Start</button>
 
 
+        <div class="game">
+      <heading> 
         <h1>Famous Dogs</h1>
         <h2>Word Guess Game</h2>
+    </heading> 
 
-        <div id=#score>
+       
+
+        <div id="score">
             <div id="win-lose"></div>
             <div id="blankLetters"></div>
-            Letters Used:
+        
             <div id="usedLetters"></div>
-            Total Wins:
+          
             <div id="totalWins"></div>
-            Remaining Guesses:
             <div id="guessesLeft"></div>
+            <button type="button" id="start-button" class="btn btn-dark btn-lg">Start</button>
+            <button type="button" id="play-again" class="btn btn-dark btn-lg">Play Again</button>
+    
         </div>
 
-
-
+    </div>
     </main>
 </body>
 
