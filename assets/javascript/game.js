@@ -5,7 +5,28 @@ $(document).ready(function () {
 
 
   //  container for words that will be played 
-  const wordStore = ['snoopy', 'lassie', 'pluto', 'toto', 'benji'];
+  const wordStore = [
+    {
+      name: 'snoopy',
+      imageUrl: 'https://media.giphy.com/media/xT9DPzhNGA8MKjxwFG/giphy.gif'
+    },
+    {
+      name: 'lassie',
+      imageUrl: "https://media.giphy.com/media/e2ieg5dCpXTTq/giphy.gif"
+    },
+    {
+      name: 'pluto',
+      imageUrl: "https://media.giphy.com/media/LOTSdEc35dOrC/giphy.gif"
+    },
+    {
+      name: 'toto',
+      imageUrl: "https://media.giphy.com/media/ENvuajAiW7Z1C/giphy.gif"
+    },
+    {
+      name: 'benji',
+
+      imageUrl: "http://www.reformer.com/uploads/original/20180315-163323-BENJI-T5_93344.jpg"
+    }];
 
   // global Variables 
   let wordSpaces = [];
@@ -26,7 +47,7 @@ $(document).ready(function () {
   $("#start-button").click(function () {
     currentWord = wordStore[Math.floor(Math.random() * wordStore.length)];
     //  create blank word
-    for (let i = 0; i < currentWord.length; i++) {
+    for (let i = 0; i < currentWord.name.length; i++) {
       wordSpaces.push('-');
       $("#start-button").hide();
       $('#play-again').show();
@@ -45,7 +66,7 @@ $(document).ready(function () {
     $("#win-lose").empty();
     $('#image').empty();
     wordSpaces = [];
-    currentWord = [];
+    currentWord = {};
     remainingGueses = 8;
     usedLetters = [];
     rightWord = [];
@@ -56,7 +77,7 @@ $(document).ready(function () {
     resetScore();
     currentWord = wordStore[Math.floor(Math.random() * wordStore.length)];
     //  display blank word
-    for (let i = 0; i < currentWord.length; i++) {
+    for (let i = 0; i < currentWord.name.length; i++) {
       wordSpaces.push('-');
     }
     renderWordSpaces();
@@ -64,12 +85,12 @@ $(document).ready(function () {
   });
 
 
-// push words to DOM
+  // push words to DOM
   const renderWordSpaces = () => {
     $("#blankLetters").html(wordSpaces);
   };
 
-// run scores
+  // run scores
   function runScoreboard() {
     // display guesses left   
     $("#guessesLeft").text('Remaining Guesses:' + remainingGueses);
@@ -84,7 +105,7 @@ $(document).ready(function () {
 
 
 
- //check if input is a letter
+  //check if input is a letter
   const isLetterKeyCode = (keyCode) => {
     return (keyCode >= 65 && keyCode <= 90)
   }
@@ -92,30 +113,30 @@ $(document).ready(function () {
 
   // event listener for key press
   document.onkeydown = (event) => {
-  let currentGuess = event.key;
-  if (remainingGueses <= 0) {
-    return;
-  }
-  if (wordSpaces.join('') === currentWord) {
-    return;
-  }
+    let currentGuess = event.key;
+    if (remainingGueses <= 0) {
+      return;
+    }
+    if (wordSpaces.join('') === currentWord.name) {
+      return;
+    }
 
     let keyCode = event.keyCode;
-    if (!isLetterKeyCode(keyCode)){
+    if (!isLetterKeyCode(keyCode)) {
       return;
     }
 
 
     // if user already guessed dont use letter again
-    if (usedLetters.includes(currentGuess))  {
+    if (usedLetters.includes(currentGuess)) {
       return;
     };
-    
+
     // if letter guessed is correct add to current word
-    if (currentWord.includes(currentGuess)) {
+    if (currentWord.name.includes(currentGuess)) {
       //check to see if letter appears multiple times 
-      for (var j = 0; j < currentWord.length; j++) {
-        if (currentWord.charAt(j) === currentGuess) {
+      for (var j = 0; j < currentWord.name.length; j++) {
+        if (currentWord.name.charAt(j) === currentGuess) {
           wordSpaces[j] = currentGuess;
         }
       }
@@ -129,22 +150,28 @@ $(document).ready(function () {
     }
     // if out of guesses you lost
     if (remainingGueses <= 0) {
-      $("#win-lose").text("You Lost");
+      // $("#win-lose").text('The answer is' + ' ' + currentWord.name);
+      // $('#image').html($('<img>', {alt:currentWord.name, src: currentWord.imageUrl}));
+      $('#image').html(`
+        <img src=${currentWord.imageUrl} alt=${currentWord.name} />
+        <p>You lose!</p>
+        <p>The correct answer is ${currentWord.name}</p>
+      `);
     }
 
     // if guessed all letters you win
-    if (wordSpaces.join('') === currentWord) {
-      $("#win-lose").text("You Win");
-      $('#image').html($('<img>',{id:'pluto',src:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7G3rmBKDeyMfO5Yzp0x3cAlLJzGucCbLwkS-0ei3WpAlvG_lrnA'}))
-    wins++;
+    if (wordSpaces.join('') === currentWord.name) {
+      $("#win-lose").text("You Win!!");
+      $('#image').html($('<img>', {alt:currentWord.name, src: currentWord.imageUrl}));
+      wins++;
     }
     runScoreboard();
-  // });
+    // });
   };
 
-  
-  
- 
+
+
+
 
 
 
