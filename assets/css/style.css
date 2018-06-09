@@ -39,14 +39,28 @@ body{
         display: inline-block;
         margin-right: 30px;
         padding-left: 30px;
+        text-shadow: 4px 4px 5px white;
     }
     
     h2{
         font-size: 70px;
         display: inline-block;
+        text-shadow: 4px 4px 5px white;
     }
 
     #win-lose{
         font-size: 75px;
         color: white;
+        text-shadow: 4px 4px 5px #000000;
     }
+
+    #image{
+        text-align: center;
+    }
+
+     #start-button{
+        margin-top: 150px;
+        width: 20%;
+        font-size: 30px;
+
+        }

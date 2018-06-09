@@ -1,25 +1,11 @@
-// Press any key to get started button
-
-// Wins: (# of times user guessed the word correctly).
-
-// If the word is madonna, display it like this when the game starts: _ _ _ _ _ _ _.
-
-// As the user guesses the correct letters, reveal them: m a d o _  _ a.
-
-// Number of Guesses Remaining: (# of guesses remaining for the user).
-
-// Letters Already Guessed: (Letters the user has guessed, displayed like L Z Y H).
-
-// After the user wins/loses the game should automatically choose another word and make the user play it.
-
-// Play a sound or song when the user guesses their word correctly, like in our demo.
+`use strict`
 
 $(document).ready(function () {
 
 
 
   //  container for words that will be played 
-  const wordStore = ['snoopie', 'lassie', 'pluto', 'toto', 'benji'];
+  const wordStore = ['snoopy', 'lassie', 'pluto', 'toto', 'benji'];
 
   // global Variables 
   let wordSpaces = [];
@@ -31,6 +17,8 @@ $(document).ready(function () {
 
 
 
+  $('#play-again').hide();
+  $('#score').hide();
 
 
 
@@ -41,6 +29,9 @@ $(document).ready(function () {
     for (let i = 0; i < currentWord.length; i++) {
       wordSpaces.push('-');
       $("#start-button").hide();
+      $('#play-again').show();
+      $('#score').show();
+
     }
     // dispaly blank word
     renderWordSpaces();
@@ -51,10 +42,11 @@ $(document).ready(function () {
   function resetScore() {
     $("#blankLetters").empty();
     $("#usedletters").empty();
+    $("#win-lose").empty();
+    $('#image').empty();
     wordSpaces = [];
     currentWord = [];
     remainingGueses = 8;
-    // let wins = 0;
     usedLetters = [];
     rightWord = [];
   };
@@ -68,70 +60,93 @@ $(document).ready(function () {
       wordSpaces.push('-');
     }
     renderWordSpaces();
+    runScoreboard();
   });
 
-  
 
+// push words to DOM
   const renderWordSpaces = () => {
     $("#blankLetters").html(wordSpaces);
   };
 
-
+// run scores
   function runScoreboard() {
     // display guesses left   
     $("#guessesLeft").text('Remaining Guesses:' + remainingGueses);
     // //  display # wins each word guessed correctly
-    $("#totalWins").text(  "Total Wins:" + wins);
+    $("#totalWins").text("Total Wins:" + wins);
     //  letters guessed tracker
     $("#usedLetters").text('Letters Used:' + usedLetters);
   };
 
   runScoreboard();
 
-  document.addEventListener('keypress', (event) => {
-    let currentGuess = event.key;
-    if (usedLetters.includes(currentGuess)) {
+
+
+
+ //check if input is a letter
+  const isLetterKeyCode = (keyCode) => {
+    return (keyCode >= 65 && keyCode <= 90)
+  }
+
+
+  // event listener for key press
+  document.onkeydown = (event) => {
+  let currentGuess = event.key;
+  if (remainingGueses <= 0) {
+    return;
+  }
+  if (wordSpaces.join('') === currentWord) {
+    return;
+  }
+
+    let keyCode = event.keyCode;
+    if (!isLetterKeyCode(keyCode)){
+      return;
+    }
+
+
+    // if user already guessed dont use letter again
+    if (usedLetters.includes(currentGuess))  {
       return;
     };
+    
+    // if letter guessed is correct add to current word
     if (currentWord.includes(currentGuess)) {
-      //    /* check to see if letter appears multiple times */
+      //check to see if letter appears multiple times 
       for (var j = 0; j < currentWord.length; j++) {
         if (currentWord.charAt(j) === currentGuess) {
           wordSpaces[j] = currentGuess;
         }
       }
+
+
       renderWordSpaces();
+      // push to used letters if not correct guess
     } else {
       usedLetters.push(currentGuess);
       remainingGueses--;
     }
+    // if out of guesses you lost
     if (remainingGueses <= 0) {
       $("#win-lose").text("You Lost");
     }
-   
 
+    // if guessed all letters you win
     if (wordSpaces.join('') === currentWord) {
       $("#win-lose").text("You Win");
-
+      $('#image').html($('<img>',{id:'pluto',src:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7G3rmBKDeyMfO5Yzp0x3cAlLJzGucCbLwkS-0ei3WpAlvG_lrnA'}))
+    wins++;
     }
     runScoreboard();
-  });
-
- // no negative guesses
-  // choose new word automatically
-  // fix so cant press keys until start
-  // sop being able to push buttons after lose
-  // hide play again
-
-  //  start game Over
-  function resetScore() {
-    let wordSpaces = [];
-    let currentWord = [];
-    let remainingGueses = 8;
-    // let wins = 0;
-    let usedLetters = [];
-    let rightWord = [];
+  // });
   };
+
+  
+  
+ 
+
+
 
 
 
@@ -141,7 +156,7 @@ $(document).ready(function () {
   // var keySound = new Audio('./assets/sounds/typewriter-key.wav');
   // //  lose alert with song/video
   // var keySound = new Audio('./assets/sounds/typewriter-key.wav');
- 
+
 
 
 
