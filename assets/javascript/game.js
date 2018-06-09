@@ -113,7 +113,7 @@ $(document).ready(function () {
 
   // event listener for key press
   document.onkeydown = (event) => {
-    let currentGuess = event.key;
+    let currentGuess = event.key.toLowerCase();
     if (remainingGueses <= 0) {
       return;
     }
