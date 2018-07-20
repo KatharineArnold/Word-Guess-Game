@@ -10,6 +10,7 @@ To play, click start, guess a letter by typing your guess on your keyboard. If y
 # Technologies Used
 - HTML
 - CSS
+- Bootstrap
 - Javascript
 
 
