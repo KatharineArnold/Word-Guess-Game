@@ -43,15 +43,19 @@ score.style.visibility = 'hidden';
 //  start button // run generate word
 let startButton = document.getElementById('start-button');
 
+
+// on click is an event handler than runs a portion of code when something is clicked
 startButton.onclick = function (event) {
+  //this selects a random word from the word store
   currentWord = wordStore[Math.floor(Math.random() * wordStore.length)];
-  //  create blank word
+  //  create blank word spaces from the selected word
   for (let i = 0; i < currentWord.name.length; i++) {
     wordSpaces.push('-');
   }
+  //show play agin and score
   playAgain.style.visibility = 'visible';
   score.style.visibility = 'visible';
-
+//hide start button
   startButton.style.visibility = 'hidden';
   // dispaly blank word
   renderWordSpaces();
@@ -112,11 +116,14 @@ const isLetterKeyCode = (keyCode) => {
 
 
 // event listener for key press
+//set the current gues to the key that was pressed
 document.onkeydown = (event) => {
   let currentGuess = event.key.toLowerCase();
+  //if there are no more guesses the game is over
   if (remainingGueses <= 0) {
     return;
   }
+  //if the guesses equal the correct word game is over
   if (wordSpaces.join('') === currentWord.name) {
     return;
   }
