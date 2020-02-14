@@ -48,7 +48,7 @@ let startButton = document.getElementById('start-button');
 startButton.onclick = function (event) {
   //this selects a random word from the word store
   currentWord = wordStore[Math.floor(Math.random() * wordStore.length)];
-  //  create blank word spaces from the selected word
+  //  create blank word spaces from the selected word using a for loop. check length and add a dash for each index
   for (let i = 0; i < currentWord.name.length; i++) {
     wordSpaces.push('-');
   }
